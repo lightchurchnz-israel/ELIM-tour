@@ -1,0 +1,30 @@
+name: ELIM TOUR QA
+on:
+  pull_request:
+  push:
+    branches: [main]
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate JavaScript syntax
+        run: node --check assets/app.js
+      - name: Validate JSON and Bokun mappings
+        run: |
+          python3 - <<'PY'
+          import json
+          tours=json.load(open('data/tours.json', encoding='utf-8'))
+          assert len(tours)==9, f'Expected 9 tours, got {len(tours)}'
+          assert len({t['slug'] for t in tours})==9
+          assert len({t['productId'] for t in tours})==9
+          for t in tours:
+              assert t['bookingUrl'].rsplit('/',1)[-1] == t['productId'], t['slug']
+              assert t['tourType'] in ('private','group'), t['slug']
+          expected={'949491','890706','961235','1081437','955749','1135444','949492','945266','1066960'}
+          assert {t['productId'] for t in tours} == expected
+          print('9 canonical Bokun mappings verified')
+          PY
+      - name: Reject stale public content
+        run: |
+          ! grep -RniE 'nzpraise@gmail.com|Hot Poll|Hanbook|Seoul Tour' index.html assets data privacy.html terms.html

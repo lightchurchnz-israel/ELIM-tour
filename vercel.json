@@ -1,0 +1,13 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    {"source":"/tour/private-auckland-signature-golf-experience","destination":"/tour/private-auckland-signature-golf","permanent":true},
+    {"source":"/tour/private-auckland-sunset-wine-hot-pool-dinner","destination":"/tour/private-sunset-wine-hot-pool-dinner","permanent":true}
+  ],
+  "rewrites": [
+    {"source":"/tours","destination":"/index.html"},
+    {"source":"/tour/:slug","destination":"/index.html"},
+    {"source":"/ko","destination":"/index.html?lang=ko"}
+  ]
+}

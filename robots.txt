@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://www.nzelimtour.com/sitemap.xml
